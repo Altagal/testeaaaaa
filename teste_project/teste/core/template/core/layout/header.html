@@ -1,0 +1,33 @@
+{% load static %}
+<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+    <div class="container-fluid">
+        <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown hidden-caret">
+                <a class="nav-link dropdown-toggle" id="messageDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {{request.user.full_name}} <i class="fas fa-user-alt"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                        <li>
+                            <div class="user-box">
+                                <div class="u-text">
+                                    <h4>{{request.user.full_name}}</h4>
+                                    <p class="text-muted">{{request.user.email}}</p>
+                                    <p class="text-muted">{% if request.user.is_superuser %} Superusuário {% elif request.user.groups.all %} {{ request.user.groups.all.0 }} {% else %} - {% endif %}</p>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'account_logout'%}">Sair</a>
+                        </li>
+                    </div>
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

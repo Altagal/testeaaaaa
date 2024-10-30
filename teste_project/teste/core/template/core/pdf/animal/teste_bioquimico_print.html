@@ -1,0 +1,193 @@
+{% extends "primato/pdf/extends/pdf_base_portrait.html" %}
+
+{% load static %}
+
+{% block title %}Bioquímica{% endblock %}
+
+{% block stylesheet %}
+
+    td, th {
+        border-left: none ;
+        border-right: none ;
+    }
+
+{% endblock %}
+
+{% block content %}
+
+{% include "primato/pdf/include/identificacao_amostra_rotulo.html" %}
+
+<table class="table2">
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Bioquímica</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th style="width:25%;">&nbsp;</th>
+        <th>Valor Absoluto</th>
+        <th>Valores de referência</th>
+        <th style="width:10%; text-align: center;">Unidade de Medida</th>
+    </tr>
+    <tr>
+        <td><b>Sódio (Na)</b></td>
+        <td style="text-align: center;">{{ obj.sodio }}</td>
+        <td style="text-align: center;">137 - 150</td>
+        <td style="text-align: center;">mEq/L</td>
+    </tr>
+    <tr>
+        <td><b>Potássio (K)</b></td>
+        <td style="text-align: center;">{{ obj.potassio|default_if_none:" - " }}</td>
+        <td style="text-align: center;">2,20 - 4,00</td>
+        <td style="text-align: center;">mEq/L</td>
+    </tr>
+    <tr>
+        <td><b>Cloro (Cl)</b></td>
+        <td style="text-align: center;">{{ obj.cloro|default_if_none:" - " }}</td>
+        <td style="text-align: center;">95 - 112</td>
+        <td style="text-align: center;">nmol/L</td>
+    </tr>
+    <tr>
+        <td><b>Glicose (GLU)</b></td>
+        <td style="text-align: center;">{{ obj.glicose|default_if_none:" - " }}</td>
+        <td style="text-align: center;">56 - 150</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Uréia (BUN)</b></td>
+        <td style="text-align: center;">{{ obj.ureia|default_if_none:" - " }}</td>
+        <td style="text-align: center;">4,0 - 25,0</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Ácido Úrico (URIC)</b></td>
+        <td style="text-align: center;">{{ obj.acido_urico|default_if_none:" - " }}</td>
+        <td style="text-align: center;">70 - 250</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Albumina (ALB)</b></td>
+        <td style="text-align: center;">{{ obj.albumina|default_if_none:" - " }}</td>
+        <td style="text-align: center;">2,70 - 5,50</td>
+        <td style="text-align: center;">g/dL</td>
+    </tr>
+    <tr>
+        <td><b>Cálcio (Ca)</b></td>
+        <td style="text-align: center;">{{ obj.calcio|default_if_none:" - " }}</td>
+        <td style="text-align: center;">8,20 - 10,40</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Fósforo (P)</b></td>
+        <td style="text-align: center;">{{ obj.fosforo|default_if_none:" - " }}</td>
+        <td style="text-align: center;">2,50 - 6,80</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Bilirrubina Direta</b></td>
+        <td style="text-align: center;">{{ obj.bilirrubina_direta|default_if_none:" - " }}</td>
+        <td style="text-align: center;">0,0</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Billirrubuna Indireta</b></td>
+        <td style="text-align: center;">{{ obj.bilirrubina_indireta|default_if_none:" - " }}</td>
+        <td style="text-align: center;">0,0</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Aspartato-Aminotransferase (AST)</b></td>
+        <td style="text-align: center;">{{ obj.aspartato_aminotransferase|default_if_none:" - " }}</td>
+        <td style="text-align: center;">70 - 250</td>
+        <td style="text-align: center;">U/L</td>
+    </tr>
+    <tr>
+        <td><b>Alanina-Aminotransferase (ALT)</b></td>
+        <td style="text-align: center;">{{ obj.alanina_aminotransferase|default_if_none:" - " }}</td>
+        <td style="text-align: center;">0</td>
+        <td style="text-align: center;">U/L</td>
+    </tr>
+    <tr>
+        <td><b>Lactato Desidrogenase (LDH)</b></td>
+        <td style="text-align: center;">{{ obj.lactato_desidrogenase|default_if_none:" - " }}</td>
+        <td style="text-align: center;">23 - 135</td>
+        <td style="text-align: center;">U/L</td>
+    </tr>
+    <tr>
+        <td><b>Creatina Quinase (CK)</b></td>
+        <td style="text-align: center;">{{ obj.creatina_quinase|default_if_none:" - " }}</td>
+        <td style="text-align: center;">77 - 838</td>
+        <td style="text-align: center;">U/L</td>
+    </tr>
+    <tr>
+        <td><b>Fosfatase Alcalina (ALKP)</b></td>
+        <td style="text-align: center;">{{ obj.fosfatase_alcalina|default_if_none:" - " }}</td>
+        <td style="text-align: center;">70,00 - 250,00</td>
+        <td style="text-align: center;">U/L</td>
+    </tr>
+    <tr>
+        <td><b>Gama (GGT)</b></td>
+        <td style="text-align: center;">{{ obj.gama|default_if_none:" - " }}</td>
+        <td style="text-align: center;">13 - 30</td>
+        <td style="text-align: center;">U/L</td>
+    </tr>
+    <tr>
+        <td><b>Colesterol (CHOL)</b></td>
+        <td style="text-align: center;">{{ obj.colesterol|default_if_none:" - " }}</td>
+        <td style="text-align: center;">63 - 275</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Ferro (Fe)</b></td>
+        <td style="text-align: center;">{{ obj.ferro|default_if_none:" - " }}</td>
+        <td style="text-align: center;">130 - 190</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Proteínas Totais (TP)</b></td>
+        <td style="text-align: center;">{{ obj.proteinas_totais|default_if_none:" - " }}</td>
+        <td style="text-align: center;">6 - 9</td>
+        <td style="text-align: center;">g/dL</td>
+    </tr>
+    <tr>
+        <td><b>Creatinina (CREA)</b></td>
+        <td style="text-align: center;">{{ obj.creatinina|default_if_none:" - " }}</td>
+        <td style="text-align: center;">0,1 - 0,6</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Bilirrubina Total (TBIL)</b></td>
+        <td style="text-align: center;">{{ obj.bilirrubina_total|default_if_none:" - "}}</td>
+        <td style="text-align: center;">0,2 - 0,8</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    <tr>
+        <td><b>Lactato (LAC)</b></td>
+        <td style="text-align: center;">{{ obj.lactato|default_if_none:" - " }}</td>
+        <td style="text-align: center;">1,14 - 1,54</td>
+        <td style="text-align: center;">mmol/L</td>
+    </tr>
+    <tr>
+        <td><b>dHDL</b></td>
+        <td style="text-align: center;">{{ obj.dHDL|default_if_none:" - "}}</td>
+        <td style="text-align: center;">40,0 - 49,4</td>
+        <td style="text-align: center;">mg/dL</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Observações Gerais</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td colspan="4" style="height: 170px; vertical-align: top;">{{ obj.observacoes|default:"Sem observações." }}</td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+

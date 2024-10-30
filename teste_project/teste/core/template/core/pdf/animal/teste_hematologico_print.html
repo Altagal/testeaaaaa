@@ -1,0 +1,162 @@
+{% extends "primato/pdf/extends/pdf_base_portrait.html" %}
+{% load static %}
+
+{% block title %}Hematologia{% endblock %}
+
+{% block stylesheet %}
+
+td, th {
+border-left: none ;
+border-right: none ;
+}
+
+{% endblock %}
+
+{% block content %}
+
+{% include "primato/pdf/include/identificacao_amostra_rotulo.html" %}
+
+<table class="table2">
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Hematologia</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th colspan="4">Hemograma - Série Vermelha</th>
+    </tr>
+    <tr>
+        <th style="width:25%;">&nbsp;</th>
+        <th>Valor Absoluto</th>
+        <th>Valores de referência</th>
+        <th style="width:10%; text-align: center;">Unidade de Medida</th>
+    </tr>
+    <tr>
+        <td><b>Contagem de Hemácia (RBC)</b></td>
+        <td style="text-align: center;">{{ obj.contagem_hemacia|default_if_none:" - "}}</td>
+        <td style="text-align: center;">5,9 - 9,4</td>
+        <td style="text-align: center;">milhões/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Dosagem da Hemoglobina (HGB)</b></td>
+        <td style="text-align: center;">{{ obj.dosagem_hemoglobina|default_if_none:" - "}}</td>
+        <td style="text-align: center;">9,3 - 16,1</td>
+        <td style="text-align: center;">g/dL</td>
+    </tr>
+    <tr>
+        <td><b>Avaliação do Hematócrito (HCT)</b></td>
+        <td style="text-align: center;">{{ obj.avaliacao_hematocrito|default_if_none:" - "}}</td>
+        <td style="text-align: center;">30,5 - 43,6</td>
+        <td style="text-align: center;">%</td>
+    </tr>
+    <tr>
+        <td><b>Volume Corpuscular Médio (MCV)</b></td>
+        <td style="text-align: center;">{{ obj.volume_corpuscular_medio|default_if_none:" - "}}</td>
+        <td style="text-align: center;">39 - 60</td>
+        <td style="text-align: center;">fm3</td>
+    </tr>
+    <tr>
+        <td><b>Hemoglobina Corpuscular Media (MCH)</b></td>
+        <td style="text-align: center;">{{ obj.hemoglobina_corpuscular_media|default_if_none:" - "}}</td>
+        <td style="text-align: center;">12,2 - 21,0</td>
+        <td style="text-align: center;">pg</td>
+    </tr>
+    <tr>
+        <td><b>Concentração de Hemoglobina corp media (MCHC)</b></td>
+        <td style="text-align: center;">{{ obj.concentracao_hemoglobina_corp_media|default_if_none:" - "}}</td>
+        <td style="text-align: center;">24,8 - 44,2</td>
+        <td style="text-align: center;">g/dL</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table2">
+    <tbody>
+    <tr>
+        <th colspan="4">Hemograma - Série Branca</th>
+    </tr>
+    <tr>
+        <th style="width:25%;">&nbsp;</th>
+        <th>Valor Absoluto</th>
+        <th>Valores de referência</th>
+        <th style="width:10%; text-align: center;">Unidade de Medida</th>
+    </tr>
+    <tr>
+        <td><b>Contagem de Leucócito (WBC)</b></td>
+        <td style="text-align: center;">{{ obj.contagem_leucocito|default_if_none:" - "}}</td>
+        <td style="text-align: center;">4,6 - 11,7</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Basófilo</b></td>
+        <td style="text-align: center;">{{ obj.basofilo|default_if_none:" - "}}</td>
+        <td style="text-align: center;">0 - 1</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Eosinófilo</b></td>
+        <td style="text-align: center;">{{ obj.eosinofilo|default_if_none:" - "}}</td>
+        <td style="text-align: center;">0 - 10</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Neutrófilo (Bastões)</b></td>
+        <td style="text-align: center;">{{ obj.neutrofilo_bastao|default_if_none:" - "}}</td>
+        <td style="text-align: center;">22 - 80</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Neutrófilo (Segmentado)</b></td>
+        <td style="text-align: center;">{{ obj.neutrofilo_segmentado|default_if_none:" - "}}</td>
+        <td style="text-align: center;">22 - 80</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Linfócito</b></td>
+        <td style="text-align: center;">{{ obj.linfocito|default_if_none:" - "}}</td>
+        <td style="text-align: center;">20 - 68</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    <tr>
+        <td><b>Monócito</b></td>
+        <td style="text-align: center;">{{ obj.monocito|default_if_none:" - "}}</td>
+        <td style="text-align: center;">1 - 6</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table2">
+    <tbody>
+    <tr>
+        <th colspan="4">Contagem de Plaquetas</th>
+    </tr>
+    <tr>
+        <th style="width:25%;">&nbsp;</th>
+        <th>Valor Absoluto</th>
+        <th>Valores de referência</th>
+        <th style="width:10%; text-align: center;">Unidade de Medida</th>
+    </tr>
+    <tr>
+        <td><b>Contagem de Plaquetas</b></td>
+        <td style="text-align: center;">{{ obj.contagem_plaquetas|default_if_none:" - "}}</td>
+        <td style="text-align: center;">350 - 558</td>
+        <td style="text-align: center;">mil/mm3</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Observações Gerais</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td colspan="4" style="height: 180px; vertical-align: top;">{{ obj.observacoes|default:"Sem observações." }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+

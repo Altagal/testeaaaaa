@@ -1,0 +1,21 @@
+<table>
+    <thead>
+    <tr>
+        <th colspan="2"><h2>Identificação da Amostra</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><b>Identificação:</b> {{obj.primata_pk.identificacao}}</td>
+        <td><b>Recinto:</b> {{obj.primata_pk.recinto_primata.nome}}</td>
+    </tr>
+    <tr>
+        <td><b>Especie:</b> {{obj.primata_pk.get_especie_display}}</td>
+        <td><b>Sexo:</b> {{obj.primata_pk.get_sexo_display}}</td>
+    </tr>
+    <tr>
+        <td><b>Data de Nascimento</b>: {{obj.primata_pk.data_nascimento|date:"d/m/y"}}</td>
+        <td><b>Data da Solicitação:</b> {{obj.data_realizacao|date:"d/m/y"}}</td>
+    </tr>
+    </tbody>
+</table>

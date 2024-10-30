@@ -1,0 +1,31 @@
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        @page {
+            margin 1cm 1cm 1cm 1cm;
+            size: a4 landscape;
+            {% block stylesheet %}
+            {% endblock %}
+        }
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 1mm 0mm 0mm 1mm;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-bottom:1cm; text-align: center;">
+    <img style="height: 2cm;" src="{% static 'images\logo-fiocruz\logo-fiocruz-ictb.png'%}">
+</div>
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

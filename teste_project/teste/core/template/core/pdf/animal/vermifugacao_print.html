@@ -1,0 +1,47 @@
+{% extends "primato/pdf/extends/pdf_base_portrait.html" %}
+
+{% load static %}
+
+{% block title %}Vermifugação{% endblock %}
+
+{% block stylesheet %}
+
+td, th {
+border-left: none ;
+border-right: none ;
+}
+
+{% endblock %}
+
+{% block content %}
+
+{% include "primato/pdf/include/identificacao_amostra_rotulo.html" %}
+<table class="table2">
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Vermifugação</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><b>Tipo Vermifugo</b></td>
+        <td style="text-align: center;">{{ obj.get_tipo_vermifugo_display }}</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Observações Gerais</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td colspan="4" style="height: 180px; vertical-align: top;">{{ obj.observacoes|default:"Sem observações." }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+

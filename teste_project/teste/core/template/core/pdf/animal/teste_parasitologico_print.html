@@ -1,0 +1,51 @@
+{% extends "primato/pdf/extends/pdf_base_portrait.html" %}
+
+{% load static %}
+
+{% block title %}Teste Parasitologico{% endblock %}
+
+{% block stylesheet %}
+
+td, th {
+border-left: none ;
+border-right: none ;
+}
+
+
+{% endblock %}
+
+{% block content %}
+
+{% include "primato/pdf/include/identificacao_amostra_rotulo.html" %}
+
+<table class="table2">
+    <thead>
+    <tr>
+        <th colspan="6"><h2>Teste Parasitologico</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><b>Parasitos</b></td>
+        <td style="text-align: center;" colspan="2">{{ obj.get_tipo_parasita_display|default:" - " }}</td>
+        <td><b>Resultado</b></td>
+        <td style="text-align: center;" colspan="2">{{ obj.get_tipo_presenca_display|default:" - " }}</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Observações Gerais</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td colspan="4" style="height: 180px; vertical-align: top;">{{ obj.observacoes|default:"Sem observações." }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+

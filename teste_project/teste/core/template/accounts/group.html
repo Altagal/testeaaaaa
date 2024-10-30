@@ -1,0 +1,96 @@
+{% extends "core/layout/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{{card_title}}{% endblock %}
+{% block stylesheet %}
+{% endblock %}
+{% block breadcrumbs %}
+<div class="page-header">
+    <a href="{% url 'group_list' %}" class="btn btn-lg btn-primary">
+        <i class="fas fa-arrow-left mr-1"></i> Voltar
+    </a>
+</div>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-xl">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title p-2">{{card_title}}</div>
+                    <div class="card-tools">
+                        {% if is_view %}
+                        <a href="{% url 'group_update' form.initial.id %}" class="btn btn-primary">
+                            Editar
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="{% if form.initial.id %}{% url 'group_update' form.initial.id %}{% else %}{% url 'group_create' %}{% endif %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% include 'core/include/base_modelform.html'%}
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                        </div>
+                        <div class="col-xl-3">
+                            {% if form.initial.id and not is_view %}
+                            <div class="form-group">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-danger btn-lg btn-block" id="group_delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <div>Excluir</div>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if not is_view %}
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-save"></i>
+                                    <div>Salvar</div>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+{% if form.initial.id and not is_view %}
+<script>
+    $('#group_delete').click(function(e) {
+	    swal({
+	        text: "Tem certeza que deseja excluir?",
+	        icon: 'info',
+	        buttons:{
+		        cancel: {
+		            text : 'Não',
+			        visible: true,
+			        className: 'btn btn-danger'
+		        },
+		        confirm: {
+			        text : 'Sim',
+			        className : 'btn btn-success'
+		        },
+	        }
+            }).then((Delete) => {
+	        if (Delete) {
+                window.location.href = "{% url 'group_delete' form.initial.id %}"
+	        } else {
+		        swal.close();
+	        }
+        });
+	});
+</script>
+{% endif %}
+{% endblock %}

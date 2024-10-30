@@ -1,0 +1,63 @@
+{% extends "primato/pdf/extends/pdf_base_portrait.html" %}
+
+{% load static %}
+
+{% block title %}Teste Tuberculinico{% endblock %}
+
+{% block stylesheet %}
+
+td, th {
+border-left: none ;
+border-right: none ;
+}
+
+
+{% endblock %}
+
+{% block content %}
+
+{% include "primato/pdf/include/identificacao_amostra_rotulo.html" %}
+
+<table class="table2">
+    <thead>
+    <tr>
+        <th colspan="6"><h2>Teste Tuberculinico</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><b>Local da Aplicação</b></td>
+        <td style="text-align: center;" colspan="2">{{ obj.get_local_aplicacao_display|default:" - " }}</td>
+        <td><b>Teste</b></td>
+        <td style="text-align: center;" colspan="2">{{ obj.get_tipo_teste_display|default:" - " }}</td>
+    </tr>
+    <tr colspan="5">
+        <td><b>24h</b></td>
+        <td style="text-align: center;">{{ obj.get_reacao_1_display|default:" - " }}</td>
+    </tr>
+    <tr colspan="5">
+        <td><b>48h</b></td>
+        <td style="text-align: center;">{{ obj.get_reacao_2_display|default:" - " }}</td>
+    </tr>
+    <tr colspan="5">
+        <td><b>72h</b></td>
+        <td style="text-align: center;">{{ obj.get_reacao_3_display|default:" - " }}</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Observações Gerais</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td colspan="4" style="height: 180px; vertical-align: top;">{{ obj.observacoes|default:"Sem observações." }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+

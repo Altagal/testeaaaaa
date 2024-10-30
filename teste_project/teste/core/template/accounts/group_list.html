@@ -1,0 +1,83 @@
+{% extends "core/layout/base.html" %}
+{% load static %}
+{% block title %}{{card_title}}{% endblock %}
+{% block stylesheets %}{% endblock stylesheets %}
+{% block breadcrumbs %}
+<div class="page-header">
+    <a href="{% url 'home' %}" class="btn btn-lg btn-primary">
+        <i class="fas fa-arrow-left mr-1"></i> Voltar
+    </a>
+</div>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title">{{card_title}}</div>
+                    <div class="card-tools">
+                        <a href="{% url 'group_create' %}" class="btn btn-lg btn-primary">
+                            <i class="fas fa-edit"></i>
+                            <div>Cadastrar</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover" id="tabela_usuario_lista">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: 45%;">Nome</th>
+                        <th scope="col" style="width: 45%;">Permissões</th>
+                        <th class="text-center" style="width: 1%;" scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in group_list %}
+                    <tr>
+                        <td>{{obj.name}}</td>
+                        <td>{% for permission in obj.permissions.all %} - {{permission.name}}<br>{% endfor %}</td>
+
+
+                        <td><a href="{% url 'group_update' obj.pk %}" class="btn btn-icon btn-primary"
+                               style="padding-top: .65rem"><i class="fas fa-eye"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        $('#tabela_usuario_lista').DataTable({
+            paging: true,
+            lengthChange: false,
+             columnDefs: [
+                { orderable: false, targets: -1 },
+             ],
+             info: false,
+              order: [[ 2, 'asc' ], [ 0, 'asc' ]],
+
+             //https://datatables.net/reference/option/language
+             //https://legacy.datatables.net/usage/i18n
+             oLanguage: {
+                "sSearch": "Procurar:",
+                "sEmptyTable": "Sem Registros",
+                "oPaginate": {
+                    "sFirst":"Primeiro",
+                    "sLast":       "Ultimo",
+                    "sNext":       "Proximo",
+                    "sPrevious":   "Anterior"
+                    },
+                 },
+         });
+    });
+</script>
+{% endblock javascript %}

@@ -1,0 +1,99 @@
+{% extends "primato/pdf/extends/pdf_base_portrait.html" %}
+
+{% load static %}
+
+{% block title %}Biometria{% endblock %}
+
+{% block stylesheet %}
+
+td, th {
+border-left: none ;
+border-right: none ;
+}
+
+{% endblock %}
+
+{% block content %}
+
+{% include "primato/pdf/include/identificacao_amostra_rotulo.html" %}
+
+<table class="table2">
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Biometria</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th style="width:25%;">&nbsp;</th>
+        <th>&nbsp;</th>
+        <th style="width:5%; text-align: center;">Unid. Medida</th>
+    </tr>
+    <tr>
+        <td><b>Peso</b></td>
+        <td style="text-align: center;">{{ obj.peso }}</td>
+        <td style="text-align: center;">g</td>
+    </tr>
+    <tr>
+        <td><b>Comprimento cabeça e corpo</b></td>
+        <td style="text-align: center;">{{ obj.comprimento_cabeca_corpo }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Comprimento da cauda</b></td>
+        <td style="text-align: center;">{{ obj.comprimento_cauda }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Mão direita aberta</b></td>
+        <td style="text-align: center;">{{ obj.mao_direita_aberta }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Mão direita fechada</b></td>
+        <td style="text-align: center;">{{ obj.mao_direita_fechada }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Pé direito</b></td>
+        <td style="text-align: center;">{{ obj.pe_direito }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Orelha direita</b></td>
+        <td style="text-align: center;">{{ obj.orelha_direita }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Circunferência do pescoço</b></td>
+        <td style="text-align: center;">{{ obj.circunferencia_pescoco }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Circunferência do crânio</b></td>
+        <td style="text-align: center;">{{ obj.circunferencia_cranio }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    <tr>
+        <td><b>Circunferência toracica</b></td>
+        <td style="text-align: center;">{{ obj.circunferencia_torax }}</td>
+        <td style="text-align: center;">cm</td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th colspan="4"><h2>Observações Gerais</h2></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td colspan="4" style="height: 180px; vertical-align: top;">{{ obj.observacoes|default:"Sem observações." }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+

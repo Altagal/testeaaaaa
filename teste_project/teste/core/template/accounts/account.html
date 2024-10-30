@@ -1,0 +1,126 @@
+{% extends "core/layout/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Editar Usuário{% endblock %}
+
+{% block stylesheet %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title">Usuário</div>
+                    <div class="card-tools">
+                        <div class="card-tools">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {{ readonly_form|crispy }}
+                </div>
+                <form action="{% url 'account_update' account.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        {{ form|crispy }}
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-save"></i>
+                                    <div>Salvar</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                <button type="button"
+                                        class="btn btn-warning btn-lg btn-block" id="account_reset_password">
+                                    <i class="fas fa-undo"></i>
+                                    <div>Redefinir senha</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            {% if account.last_login == account.date_joined %}
+                            <div class="form-group">
+                                <button type="button"
+                                        class="btn btn-danger btn-lg btn-block" id="account_delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <div>Excluir</div>
+                                </button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-xl-3">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    $("#account_reset_password").click(function(e) {
+        swal({
+            text: "Tem certeza que deseja redefinir a senha desta conta?",
+            icon: "info",
+            buttons:{
+                cancel: {
+                    text : "Não",
+                    visible: true,
+                    className: "btn btn-danger"
+                },
+                confirm: {
+                    text : "Sim",
+                    className : "btn btn-success"
+                },
+            }
+            }).then((Delete) => {
+            if (Delete) {
+                window.location.href = "{% url "account_reset_password" account.id %}"
+            } else {
+                swal.close();
+            }
+        });
+    });
+</script>
+<script>
+    {% if account.last_login == account.date_joined %}
+    $("#account_delete").click(function(e) {
+        swal({
+            text: "Tem certeza que deseja excluir?",
+            icon: "info",
+            buttons:{
+                cancel: {
+                    text : "Não",
+                    visible: true,
+                    className: "btn btn-danger"
+                },
+                confirm: {
+                    text : "Sim",
+                    className : "btn btn-success"
+                },
+            }
+            }).then((Delete) => {
+            if (Delete) {
+                window.location.href = "{% url "account_delete" account.id %}"
+            } else {
+                swal.close();
+            }
+        });
+    });
+
+</script>
+
+{% endif %}
+{% endblock %}
+

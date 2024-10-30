@@ -1,0 +1,16 @@
+{% load static %}
+<div class="sidebar sidebar-style-2">
+    {% if user.is_authenticated and user.is_staff %}
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <ul class="nav nav-primary">
+                {% if user.is_superuser or perms.accounts.can_manage_user %}
+                <li class="nav-section"><span class="sidebar-mini-icon"></span><h4 class="text-section">Usuário</h4></li>
+                <li class="nav-item active"><a href="{% url 'account_list'%}"><i class="fas fa-user-cog"></i><p>Gerenciar Usuário</p></a></li>
+                <li class="nav-item active"><a href="{% url 'group_list'%}"><i class="fas fa-user-cog"></i><p>Gerenciar Grupos</p></a></li>
+                {% endif %}
+                </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>

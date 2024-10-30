@@ -1,0 +1,64 @@
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        @page {
+            /* https://xhtml2pdf.readthedocs.io/en/latest/format_html.html */
+
+            size: a4 portrait;
+            /* A4 SIZE 210mm x 297mm */
+
+            @frame footer_frame {
+                -pdf-frame-content: footer_content;
+                left: 180mm; top: 287mm; width: 190mm;
+            }
+
+            @frame content_frame {
+                left: 10mm; top: 10mm; width: 190mm; height: 287mm;
+            }
+        }
+
+        table {
+          margin-bottom:5mm;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1mm 1mm 0mm 1mm;
+        }
+
+        table {
+            page-break-inside:auto;
+        }
+
+        tr {
+            page-break-inside:avoid;
+            page-break-after:auto
+        }
+
+        {% block stylesheet %}
+        {% endblock %}
+    </style>
+</head>
+<body>
+
+<div style="margin-bottom:5mm;">
+    <img style="height:20mm; " src="{% static 'images\logo-fiocruz\logo-fiocruz-ictb.png'%}">
+</div>
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+<div id="footer_content">
+    Página
+    <pdf:pagenumber> de
+        <pdf:pagecount>
+</div>
+</body>
+</html>

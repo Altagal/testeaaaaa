@@ -1,0 +1,23 @@
+{% for form_field in form.visible_fields %}
+<div class="{% if form_field.field.widget.input_type %}col-xl-6{% else %}col-xl-12{% endif %}">
+    <div class="form-group{% if form_field.errors %} has-error{% endif %}">
+        {{ form_field.label_tag }}{% if form_field.field.required %}*{% endif %}
+        <div class="input-group">
+            {% if form_field.field.prepend %}
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{ form_field.field.prepend }}</span>
+            </div>
+            {% endif %}
+            {{ form_field }}
+            {% if form_field.field.append %}
+            <div class="input-group-append">
+                <span class="input-group-text">{{ form_field.field.append }}</span>
+            </div>
+            {% endif %}
+        </div>
+        {% for form_field_error in form_field.errors %}
+        <small class="form-text text-muted">{{ form_field_error }}</small>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
