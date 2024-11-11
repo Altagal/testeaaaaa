@@ -1,16 +1,14 @@
 {% extends "core/layout/base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}Editar Usuário{% endblock %}
-
+{% block title %}{{card_title}}{% endblock %}
 {% block stylesheet %}{% endblock %}
-
 {% block content %}
 <div class="row">
     <div class="col-xl">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
-                    <div class="card-title">Usuário</div>
+                    <div class="card-title">{{card_title}}</div>
                     <div class="card-tools">
                         <div class="card-tools">
                         </div>
@@ -19,17 +17,16 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    {{ readonly_form|crispy }}
+                    {% crispy readonly_form %}
                 </div>
-                <form action="{% url 'account_update' account.id %}" method="POST">
-                    {% csrf_token %}
+                <form method="post">
                     <div class="row">
-                        {{ form|crispy }}
+                        {% crispy form %}
                     </div>
                     <div class="row">
                         <div class="col-xl-3">
                             <div class="form-group">
-                                <button class="btn btn-primary btn-lg btn-block">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
                                     <i class="fas fa-save"></i>
                                     <div>Salvar</div>
                                 </button>
@@ -37,25 +34,23 @@
                         </div>
                         <div class="col-xl-3">
                             <div class="form-group">
-                                <button type="button"
-                                        class="btn btn-warning btn-lg btn-block" id="account_reset_password">
-                                    <i class="fas fa-undo"></i>
-                                    <div>Redefinir senha</div>
+                                <button type="button" class="btn btn-warning btn-lg btn-block"
+                                        id="account_reset_password_button">
+                                    <i class="fas fa-save"></i>
+                                    <div>Redefinir Senha</div>
                                 </button>
                             </div>
                         </div>
                         <div class="col-xl-3">
-                            {% if account.last_login == account.date_joined %}
+                            {% if account_obj.last_login == account_obj.date_joined %}
                             <div class="form-group">
-                                <button type="button"
-                                        class="btn btn-danger btn-lg btn-block" id="account_delete">
+                                <button type="button" class="btn btn-danger btn-lg btn-block"
+                                        id="account_delete_button">
                                     <i class="fas fa-trash-alt"></i>
                                     <div>Excluir</div>
                                 </button>
                             </div>
                             {% endif %}
-                        </div>
-                        <div class="col-xl-3">
                         </div>
                     </div>
                 </form>
@@ -63,13 +58,10 @@
         </div>
     </div>
 </div>
-</div>
 {% endblock %}
-
 {% block javascript %}
-
 <script>
-    $("#account_reset_password").click(function(e) {
+    $("#account_reset_password_button").click(function(e) {
         swal({
             text: "Tem certeza que deseja redefinir a senha desta conta?",
             icon: "info",
@@ -86,16 +78,17 @@
             }
             }).then((Delete) => {
             if (Delete) {
-                window.location.href = "{% url "account_reset_password" account.id %}"
+                window.location.href = "{% url "account_reset_password" account_obj.id %}"
             } else {
                 swal.close();
             }
         });
     });
 </script>
+
+{% if account_obj.last_login == account_obj.date_joined %}
 <script>
-    {% if account.last_login == account.date_joined %}
-    $("#account_delete").click(function(e) {
+    $("#account_delete_button").click(function(e) {
         swal({
             text: "Tem certeza que deseja excluir?",
             icon: "info",
@@ -112,7 +105,7 @@
             }
             }).then((Delete) => {
             if (Delete) {
-                window.location.href = "{% url "account_delete" account.id %}"
+                window.location.href = "{% url "account_delete" account_obj.id %}"
             } else {
                 swal.close();
             }

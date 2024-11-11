@@ -1,28 +1,17 @@
 {% extends "core/layout/base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}{{card_title}}{% endblock %}
-{% block stylesheet %}
-{% endblock %}
-{% block breadcrumbs %}
-<div class="page-header">
-    <a href="{% url 'group_list' %}" class="btn btn-lg btn-primary">
-        <i class="fas fa-arrow-left mr-1"></i> Voltar
-    </a>
-</div>
-{% endblock %}
+{% block stylesheet %}{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-xl">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
-                    <div class="card-title p-2">{{card_title}}</div>
+                    <div class="card-title">{{card_title}}</div>
                     <div class="card-tools">
-                        {% if is_view %}
-                        <a href="{% url 'group_update' form.initial.id %}" class="btn btn-primary">
-                            Editar
-                        </a>
-                        {% endif %}
+                        <div class="card-tools">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,16 +29,19 @@
                                 </button>
                             </div>
                         </div>
-                        {% if form.initial.id  %}
                         <div class="col-xl-3">
+                            {% if form.initial.id %}
                             <div class="form-group">
-                                <button type="button" class="btn btn-danger btn-lg btn-block" id="group_delete_button">
+                                <button type="button" class="btn btn-danger btn-lg btn-block"
+                                        id="foo_delete_button">
                                     <i class="fas fa-trash-alt"></i>
-                                    <div>Exluir</div>
+                                    <div>Excluir</div>
                                 </button>
                             </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
+                        <div class="col-xl-3">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -58,31 +50,34 @@
 </div>
 {% endblock %}
 {% block javascript %}
-{% if form.initial.id %}
 <script>
-    $('#group_delete_button').click(function(e) {
-	    swal({
-	        text: "Tem certeza que deseja excluir?",
-	        icon: 'info',
-	        buttons:{
-		        cancel: {
-		            text : 'Não',
-			        visible: true,
-			        className: 'btn btn-danger'
-		        },
-		        confirm: {
-			        text : 'Sim',
-			        className : 'btn btn-success'
-		        },
-	        }
+    {% if form.initial.id %}
+    $("#foo_delete_button").click(function(e) {
+        swal({
+            text: "Tem certeza que deseja excluir?",
+            icon: "info",
+            buttons:{
+                cancel: {
+                    text : "Não",
+                    visible: true,
+                    className: "btn btn-danger"
+                },
+                confirm: {
+                    text : "Sim",
+                    className : "btn btn-success"
+                },
+            }
             }).then((Delete) => {
-	        if (Delete) {
-                window.location.href = "{% url 'group_delete' form.initial.id %}"
-	        } else {
-		        swal.close();
-	        }
+            if (Delete) {
+                window.location.href = "{% url "foo_delete" form.initial.id %}"
+            } else {
+                swal.close();
+            }
         });
-	});
+    });
+    {% endif %}
+
 </script>
-{% endif %}
+
 {% endblock %}
+

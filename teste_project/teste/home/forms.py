@@ -1,22 +1,23 @@
+from crispy_forms.layout import Layout
 from django.forms import ModelForm, MultipleChoiceField, CheckboxSelectMultiple
 
-exclude_softdelete_fields = ["created_at", "deleted_at", "restored_at", "modified_at", "modified_by", ]
+exclude_softdelete_fields = ['created_at', 'deleted_at', 'restored_at', 'modified_at', 'modified_by', 'transaction_id']
 
 
-class PrimatoModelForm(ModelForm):
-    # variaveis customizadas para exibição de texto de ajuda antes e apos cada campo input no form
+class CustomModelForm(ModelForm):
+    # Variaveis customizadas para exibição de texto de ajuda antes e apos cada campo input no form
     prepend = None
     append = None
 
-    def __init__(self, *args, readonly=None, **kwargs, ):
+    def __init__(self, *args, readonly=None, **kwargs):
 
-        # variavel privada
+        # Variavel privada
         __first_loop = True
 
         super().__init__(*args, **kwargs)
 
         #   Limpa os sulfixos do label de todos os campos do form
-        self.label_suffix = ""
+        self.label_suffix = ''
 
         for visible in self.visible_fields():
 
@@ -30,22 +31,22 @@ class PrimatoModelForm(ModelForm):
             #   AJUSTES PERSONALIZADOS POR TIPO DE CAMPO
             # visible.field.widget retirado de .venv\Lib\site-packages\django\forms\widgets.py
 
-            if type(visible.field.widget).__name__ == "DateInput":  # Ajusta type do input para tipo 'date'
+            if type(visible.field.widget).__name__ == 'DateInput':  # Ajusta type do input para tipo 'date'
                 visible.field.widget.input_type = 'date'
                 visible.field.widget.format = '%Y-%m-%d'
 
-            if type(visible.field.widget).__name__ == "CheckboxInput":  # Adiciona a classe 'form-check' aos campos bool para coerencia visual
+            if type(visible.field.widget).__name__ == 'CheckboxInput':  # Adiciona a classe 'form-check' aos campos bool para coerencia visual
                 visible.field.widget.attrs['class'] = 'form-check'
 
-            if type(visible.field.widget).__name__ == "ClearableFileInput":  # Ajuste do campo vazio de selectbox para coerencia visual
+            if type(visible.field.widget).__name__ == 'ClearableFileInput':  # Ajuste do campo vazio de selectbox para coerencia visual
                 visible.field.widget.attrs['accept'] = 'image/*'
                 visible.field.widget.input_type = 'file'
-                visible.field.widget.template_name = "django/forms/widgets/file.html"
+                visible.field.widget.template_name = 'django/forms/widgets/file.html'
 
-            if type(visible.field.widget).__name__ == "ClearableFileInput" and readonly:
-                visible.field.widget.input_type = "hidden"
+            if type(visible.field.widget).__name__ == 'ClearableFileInput' and readonly:
+                visible.field.widget.input_type = 'hidden'
 
-            if type(visible.field).__name__ == "ModelMultipleChoiceField":  # Muda o tipo de seletor, de select para checkbox
+            if type(visible.field).__name__ == 'ModelMultipleChoiceField':  # Muda o tipo de seletor, de select para checkbox
                 visible.field = MultipleChoiceField(choices=visible.field.choices, widget=CheckboxSelectMultiple())
                 # Corrige a atribuição inicial dos campos. Quando le um registro ja preenchido, marca como selecionado.
                 if visible.initial:
@@ -54,10 +55,10 @@ class PrimatoModelForm(ModelForm):
                         relation_id.append(relation.id)
                     visible.initial = relation_id
 
-            if type(visible.field.widget).__name__ == "Textarea":  # and visible.field.widget.input_type == text:
+            if type(visible.field.widget).__name__ == 'Textarea':  # and visible.field.widget.input_type == text:
                 visible.field.widget.attrs['rows'] = 3
 
-        # Define readonly quando o for inicializado com "readonly=True"
+        # Define readonly quando o for inicializado com 'readonly=True'
         if readonly:
             for visible in self.visible_fields():
                 visible.field.required = False
@@ -67,7 +68,7 @@ class PrimatoModelForm(ModelForm):
         #   Substitui as mensagens de erro
         for field in self.fields.values():
             field.error_messages = {'required': 'Este campo é obrigatorio.',
-                                    'unique': "Este registro já existe no sistema."}
+                                    'unique': 'Este registro já existe no sistema.'}
 
     class Meta:
         abstract = True

@@ -7,7 +7,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -18,7 +17,6 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY'),
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -35,6 +33,7 @@ INSTALLED_APPS = [
 
     'home',
     'accounts',
+    'foos',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -81,7 +79,6 @@ DATABASES = {
         'PORT': os.getenv('DATABASE_PORT'),
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -101,16 +98,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
-
-USE_I18N = True
-
 USE_TZ = True
 
 
@@ -140,3 +132,4 @@ AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'account_login'
 
+DEFAULT_PASSWORD = 'Ictb@1234'

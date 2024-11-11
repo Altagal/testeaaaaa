@@ -20,5 +20,5 @@ urlpatterns = [
     # path('ver-grupo/<str:pk>/', views.group_read, name='group_user'), # nao ultilizado
     path('cadastrar-grupo', views.group_create, name='group_create'),
     path('editar-grupo/<str:pk>/', views.group_update, name='group_update'),
-    path('excluir-conta/<str:pk>/', views.group_delete, name='group_delete'),
+    path('excluir-grupo/<str:pk>/', views.group_delete, name='group_delete'),
 ]

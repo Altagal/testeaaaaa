@@ -41,13 +41,18 @@ class MyAccountManager(BaseUserManager):
 
 
 class Account(AbstractUser, BaseUserManager):
-    username = models.CharField(max_length=100, null=True, blank=True)
+    username = models.CharField(max_length=100, null=True,
+                                blank=True)  # atributo nao usado, se possivel deixar em branco
+
+    first_name = models.CharField(max_length=150, blank=True, verbose_name='Nome')
+    last_name = models.CharField(max_length=150, blank=True, verbose_name='Sobrenome')
     email = models.EmailField(unique=True)
+    password = models.CharField(max_length=128, verbose_name='Senha')
 
-    date_joined = models.DateTimeField(default=datetime.now)
-    last_login = models.DateTimeField(default=datetime.now)
+    last_login = models.DateTimeField(default=datetime.now, verbose_name='Ultimo login')
+    date_joined = models.DateTimeField(default=datetime.now, verbose_name='Data de criação')
 
-    is_active = models.BooleanField(default=False)  # ativação é feita só pelo superuser ou admin
+    is_active = models.BooleanField(default=False, verbose_name='Ativo')  # ativação é feita só pelo superuser ou admin
     is_verified = models.BooleanField(default=False)  # verificação pelo email institucional
 
     # Campos nao ultilizados
@@ -62,8 +67,8 @@ class Account(AbstractUser, BaseUserManager):
     class Meta:
         # todas as permissoes do sistema serão alocadas aqui
         permissions = [
-            ("can_manage_user", "Pode gerenciar Usuarios e Grupos"),
-            ("can_test_things", "Pode testar essa coisa aqui"),
+            ('can_manage_user', 'Pode gerenciar Usuarios e Grupos'),
+            ('can_test_things', 'Pode testar essa coisa aqui'),
         ]
 
     def __str__(self):

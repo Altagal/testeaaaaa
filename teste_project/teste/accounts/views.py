@@ -6,8 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from accounts.forms import CustomUserForm, CustomUserLoginForm, ChangePasswordForm, GroupForm, CustomUserUpdateForm, \
     CustomUserReadonlyForm
 from accounts.models import Account
-
-default_password = 'Ictb@1234'
+from core.settings import DEFAULT_PASSWORD
 
 
 def account_register(request):
@@ -56,7 +55,7 @@ def account_login(request):
                 login(request, user)
 
                 # se senha for senha padrao, redireciona para pagina de mudança de senha
-                if user.check_password(default_password):
+                if user.check_password(DEFAULT_PASSWORD):
                     return redirect('account_change_password')
 
                 return redirect('home')
@@ -104,26 +103,37 @@ def account_read(request, pk):
 @login_required
 def account_update(request, pk):
     obj = get_object_or_404(Account, id=pk)
+
+    pre_context = {
+        "card_title": "Usuário",
+    }
+
+    if request.method == 'GET':
+        context = {
+            'readonly_form': CustomUserReadonlyForm(instance=obj),
+            'form': CustomUserUpdateForm(instance=obj),
+            'account_obj': obj,
+        }
+
     if request.method == 'POST':
-        account_status = request.POST.get('status', False)
 
-        group = Group.objects.get(id=request.POST['grupo'])
-        group.user_set.add(obj)
+        # SET GROUP
+        checked_group_list = request.POST.getlist('groups')
+        group_list = Group.objects.filter(id__in=checked_group_list)
+        # for group in group_list:
+        obj.groups.set(group_list, clear=True)
 
-        obj.is_active = account_status
+        #SET ACTIVE
+        obj.is_active = True if request.POST.get('is_active') else False
+
+        if not obj.is_active:  # Se usuario foi desativado, retira ele de todos os grupos
+            obj.groups.set([], clear=True)
 
         obj.save()
 
         return redirect('account_list')
 
-    context = {
-        'readonly_form': CustomUserReadonlyForm(instance=obj),
-        'form': CustomUserUpdateForm(instance=obj),
-        'is_edit': True,
-        'account': obj,
-        'group_list': Group.objects.all(),
-    }
-    return render(request, 'accounts/account.html', context)
+    return render(request, 'accounts/account.html', {**pre_context, **context})
 
 
 @login_required
@@ -138,9 +148,9 @@ def account_delete(request, pk):
 @login_required
 def account_reset_password(request, pk):
     obj = Account.objects.get(id=pk)
-    obj.set_password(default_password)
+    obj.set_password(DEFAULT_PASSWORD)
     obj.save()
-    messages.success(request, 'Senha redefinida com sucesso. Ultilize "' + default_password + '" no proximo acesso.')
+    messages.success(request, 'Senha redefinida com sucesso. Ultilize "' + DEFAULT_PASSWORD + '" no proximo acesso.')
     return redirect('account_update', pk)
 
 
